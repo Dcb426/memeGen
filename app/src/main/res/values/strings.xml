@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Jet-Puffed: Meme Generator</string>
+    <string name="uploadspicturestofirebase">UploadsPicturestofirebase</string>
 </resources>
