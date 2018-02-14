@@ -1,4 +1,12 @@
 <resources>
     <string name="app_name">Jet-Puffed: Meme Generator</string>
     <string name="uploadspicturestofirebase">UploadsPicturestofirebase</string>
+    <string name="top">Top</string>
+    <string name="bottom">Bottom</string>
+    <string name="save">Save</string>
+    <string name="textview">TextView</string>
+    <string name="retake">RETAKE</string>
+    <string name="accept">ACCEPT</string>
+    <string name="todo">TODO</string>
+    <string name="take">TAKE</string>
 </resources>

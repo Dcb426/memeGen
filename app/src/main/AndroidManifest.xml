@@ -3,6 +3,9 @@
     package="cs316.project_1.memegen">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera.autofocus" />
 
     <application
         android:allowBackup="true"
@@ -24,7 +27,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".upload_photos"
+        <activity android:name=".pickingImage"
             android:parentActivityName=".start_Up">
             <!-- The meta-data tag is required if you support API level 15 and lower -->
             <meta-data

@@ -16,8 +16,8 @@ public class start_Up extends AppCompatActivity {
         setContentView(R.layout.activity_start__up);
 
         //Move to UploadPage
-        final Intent moveToUploadPage = new Intent(this, upload_photos.class);
-        Uploadpage = (ImageButton) findViewById(R.id.UploadPicture);
+        final Intent moveToUploadPage = new Intent(this, pickingImage.class);
+        Uploadpage = (ImageButton) findViewById(R.id.uploadPicture);
         Uploadpage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
