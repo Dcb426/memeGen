@@ -7,21 +7,22 @@
     <ImageView
         android:id="@+id/result"
         android:layout_width="0dp"
-        android:layout_height="425dp"
+        android:layout_height="446dp"
+        android:layout_marginBottom="8dp"
         android:contentDescription="@string/todo"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintHorizontal_bias="0.506"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
         app:srcCompat="@color/common_google_signin_btn_text_dark_focused" />
 
     <Button
         android:id="@+id/retake"
         android:layout_width="171dp"
         android:layout_height="77dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginLeft="16dp"
         android:layout_marginStart="8dp"
         android:fontFamily="casual"
         android:onClick="onClick"
@@ -31,18 +32,15 @@
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/accept"
-        app:layout_constraintHorizontal_bias="0.727"
-        app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/result"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 
     <Button
         android:id="@+id/accept"
         android:layout_width="170dp"
         android:layout_height="77dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginEnd="8dp"
+        android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:fontFamily="casual"
         android:lineSpacingExtra="8sp"
@@ -54,5 +52,5 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/result"
-        app:layout_constraintVertical_bias="1.0" />
+        app:layout_constraintVertical_bias="0.0" />
 </android.support.constraint.ConstraintLayout>
