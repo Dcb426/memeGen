@@ -10,6 +10,7 @@ public class start_Up extends AppCompatActivity {
 
     // Creating button.
     ImageButton Uploadpage;
+    ImageButton Uploadpage2;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -24,5 +25,16 @@ public class start_Up extends AppCompatActivity {
             startActivity(moveToUploadPage);
             }
         });
+
+        final Intent moveToUploadPage2 = new Intent(this, Library.class);
+        Uploadpage2 = (ImageButton) findViewById(R.id.uploadPicture2);
+        Uploadpage2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(moveToUploadPage2);
+            }
+        });
+
+
     }
 }

@@ -33,7 +33,7 @@ public class upload_photos extends AppCompatActivity {
     String Storage_Path = "All_Image_Uploads/";
 
     // Root Database Name for Firebase Database.
-    String Database_Path = "All_Image_Uploads_Database";
+    static String Database_Path = "All_Image_Uploads_Database";
 
     // Creating button.
     Button ChooseButton, UploadButton;
