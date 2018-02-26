@@ -9,4 +9,6 @@
     <string name="accept">ACCEPT</string>
     <string name="todo">TODO</string>
     <string name="take">TAKE</string>
+    <string name="enter_image_name_here">Enter Image Name Here</string>
+    <string name="upload">Upload</string>
 </resources>
