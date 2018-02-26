@@ -5,10 +5,10 @@ import android.content.ContentResolver;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
+import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -76,9 +76,13 @@ public class upload_photos extends AppCompatActivity {
 
         // Assign ID'S to image view.
         SelectImage = (ImageView)findViewById(R.id.ShowImageView);
+        Intent intent = getIntent();
+        Bitmap bitmap = (Bitmap) intent.getParcelableExtra("BitmapImage");
+        SelectImage.setImageBitmap(bitmap);
 
         // Assigning Id to ProgressDialog.
         progressDialog = new ProgressDialog(upload_photos.this);
+
 
         // Adding click listener to Choose image button.
         ChooseButton.setOnClickListener(new View.OnClickListener() {
@@ -95,6 +99,7 @@ public class upload_photos extends AppCompatActivity {
 
             }
         });
+
 
 
         // Adding click listener to Upload image button.
