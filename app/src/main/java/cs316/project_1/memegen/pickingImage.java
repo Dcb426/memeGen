@@ -7,17 +7,19 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.ExifInterface;
+import android.media.MediaScannerConnection;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.os.Environment;
 import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.View;
 import android.webkit.MimeTypeMap;
 import android.widget.Button;
@@ -35,9 +37,11 @@ import com.google.firebase.storage.OnProgressListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import java.io.FileNotFoundException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.Random;
 
 
 public class pickingImage extends AppCompatActivity {
@@ -54,9 +58,9 @@ public class pickingImage extends AppCompatActivity {
     // Folder path for Firebase Storage.
     String Storage_Path = "All_Image_Uploads/";
     // Root Database Name for Firebase Database.
-    String Database_Path = "All_Image_Uploads_Database";
+    static String Database_Path = "All_Image_Uploads_Database";
     // Creating button.
-    Button ChooseButton, UploadButton;
+    Button UploadButton;
     // Creating URI.
     Uri FilePathUri;
     // Creating StorageReference and DatabaseReference object.
@@ -65,6 +69,8 @@ public class pickingImage extends AppCompatActivity {
     // Image request code for onActivityResult() .
     int Image_Request_Code = 7;
     ProgressDialog progressDialog ;
+    Bitmap map;
+    private String fname;
 
 
     @Override
@@ -98,10 +104,12 @@ public class pickingImage extends AppCompatActivity {
                     Bitmap bmp2 = Bitmap.createBitmap(bottomLevelPic.getDrawingCache(true));
                     Bitmap bitmap = ((BitmapDrawable)imageView.getDrawable()).getBitmap();
                     Bitmap combined = combineImages(bitmap,bmp,bmp2);
+                    map = combined;
+                    imageView.setImageResource(android.R.color.transparent);
+                    bottomLevelPic.setVisibility(View.INVISIBLE);
+                    topLevelPic.setVisibility(View.INVISIBLE);
                     imageView.setImageBitmap(combined);
-                    //move(combined);
-                    //moveToUploadPage.putExtra("imagePath", filepath);
-                    //startActivity(moveToUploadPage);
+                    saveImageToExternalStorage(combined);
                 }
             }
         });
@@ -112,6 +120,7 @@ public class pickingImage extends AppCompatActivity {
 
                 // Calling method to upload selected image on Firebase storage.
                 UploadImageFileToFirebaseStorage();
+                sharePhoto(map);
 
             }
         });
@@ -133,6 +142,8 @@ public class pickingImage extends AppCompatActivity {
                 topLevelPic.setText(input);
             }
         });
+
+
         bottomLevel.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
@@ -166,7 +177,6 @@ public class pickingImage extends AppCompatActivity {
         InputStream stream = null;
         Uri uri = null;
         if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK)
-            FilePathUri = data.getData();
         try {
             // recyle unused bitmaps
             if (bitmap != null) {
@@ -174,23 +184,19 @@ public class pickingImage extends AppCompatActivity {
             }
 
             Uri fileUri = data.getData();
+            assert fileUri != null;
             stream = getContentResolver().openInputStream(fileUri);
             bitmap = BitmapFactory.decodeStream(stream);
-            ExifInterface exif = new ExifInterface(stream);
-            int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-            int rotationInDegrees = exifToDegrees(rotation);
+            //ExifInterface exif = new ExifInterface(stream);
+            //int rotation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+            //int rotationInDegrees = exifToDegrees(rotation);
+            //Matrix matrix = new Matrix();
+            //matrix.postRotate(90);
+            //Bitmap rotatedImg = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
+            bottomLevelPic.setMinWidth(bitmap.getWidth());
+            topLevelPic.setMinWidth(bitmap.getWidth());
+            imageView.setImageBitmap(bitmap);
 
-
-            Matrix matrix = new Matrix();
-//
-            matrix.postRotate(rotationInDegrees);
-            Bitmap rotatedImg = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-            bottomLevelPic.setMaxWidth(bitmap.getWidth());
-            topLevelPic.setMaxWidth(bitmap.getWidth());
-            imageView.setImageBitmap(rotatedImg);
-
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -200,15 +206,15 @@ public class pickingImage extends AppCompatActivity {
         int width = 0, height = 0;
         Bitmap cs;
 
-        width = background.getWidth();
-        height = background.getHeight();
+        width = imageView.getWidth();
+        height = imageView.getHeight();
 
         cs = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888);
         Canvas comboImage = new Canvas(cs);
         background = Bitmap.createScaledBitmap(background, width, height, true);
         comboImage.drawBitmap(background, 0, 0, null);
         comboImage.drawBitmap(foreground, 0,0, null);
-        comboImage.drawBitmap(forground2, 0,600, null);
+        comboImage.drawBitmap(forground2, 0,725, null);
 
         return cs;
     }
@@ -218,18 +224,6 @@ public class pickingImage extends AppCompatActivity {
         else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
         return 0;
     }
-    public void move(Bitmap combined)
-    {
-        Intent moveToUploadPage = new Intent(this, upload_photos.class);
-        //imageView.buildDrawingCache();
-        //Bitmap image= imageView.getDrawingCache();
-        //Bundle extras = new Bundle();
-        //extras.putParcelable("imagebitmap", image);
-        //moveToUploadPage.putExtras(extras);
-        moveToUploadPage.putExtra("BitmapImage", combined);
-        startActivity(moveToUploadPage);
-    }
-
     // Creating Method to get the selected image file Extension from File Path URI.
     public String GetFileExtension(Uri uri) {
 
@@ -264,7 +258,7 @@ public class pickingImage extends AppCompatActivity {
                         public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
 
                             // Getting image name from EditText and store into string variable.
-                            String TempImageName = topLevelPic.getText().toString().trim();
+                            String TempImageName = fname.trim();
 
                             // Hiding the progressDialog after done uploading.
                             progressDialog.dismiss();
@@ -273,6 +267,7 @@ public class pickingImage extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), "Image Uploaded Successfully ", Toast.LENGTH_LONG).show();
 
                             @SuppressWarnings("VisibleForTests")
+
                             ImageUploadInfo imageUploadInfo = new ImageUploadInfo(TempImageName, taskSnapshot.getDownloadUrl().toString());
 
                             // Getting image upload ID.
@@ -311,5 +306,60 @@ public class pickingImage extends AppCompatActivity {
             Toast.makeText(pickingImage.this, "Please Select Image or Add Image Name", Toast.LENGTH_LONG).show();
 
         }
+    }
+
+    private void saveImageToExternalStorage(Bitmap finalBitmap) {
+        String root = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES).toString();
+        File myDir = new File(root + "/saved_images_1");
+        myDir.mkdirs();
+        Random generator = new Random();
+        int n = 10000;
+        n = generator.nextInt(n);
+        fname = "Image-" + n + ".jpg";
+        File file = new File(myDir, fname);
+        if (file.exists())
+            file.delete();
+        try {
+            FileOutputStream out = new FileOutputStream(file);
+            finalBitmap.compress(Bitmap.CompressFormat.JPEG, 90, out);
+            out.flush();
+            out.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
+        // Tell the media scanner about the new file so that it is
+        // immediately available to the user.
+        MediaScannerConnection.scanFile(this, new String[]{file.toString()}, null,
+                new MediaScannerConnection.OnScanCompletedListener() {
+                    public void onScanCompleted(String path, Uri uri) {
+                        Log.i("ExternalStorage", "Scanned " + path + ":");
+                        Log.i("ExternalStorage", "-> uri=" + uri);
+                        FilePathUri = uri;
+                    }
+                });
+
+    }
+    public void sharePhoto(Bitmap look)
+    {
+        String type = "image/*";
+        // Create the new Intent using the 'Send' action.
+        Intent share = new Intent(Intent.ACTION_SEND);
+
+        // Set the MIME type
+        share.setType(type);
+
+        // Create the URI from the media
+        File media = new File(String.valueOf(FilePathUri));
+        Uri uri = Uri.fromFile(media);
+
+        // Add the URI to the Intent.
+        share.putExtra(Intent.EXTRA_STREAM, uri);
+
+        // Broadcast the Intent.
+        startActivity(Intent.createChooser(share, "Share to"));
+
     }
 }

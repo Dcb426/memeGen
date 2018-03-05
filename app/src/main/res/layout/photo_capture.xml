@@ -6,59 +6,56 @@
 
     <ImageView
         android:id="@+id/result"
-        android:layout_width="0dp"
-        android:layout_height="265dp"
-        android:layout_marginBottom="8dp"
+        android:layout_width="376dp"
+        android:layout_height="317dp"
         android:layout_marginTop="8dp"
         android:adjustViewBounds="false"
         android:contentDescription="@string/todo"
         android:orientation="vertical"
-        app:layout_constraintBottom_toTopOf="@+id/editText2"
-        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintHorizontal_bias="0.448"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0"
-        app:srcCompat="@color/common_google_signin_btn_text_dark_focused" />
+        app:srcCompat="@drawable/jetpuffed" />
 
     <Button
         android:id="@+id/retake"
         android:layout_width="89dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="192dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:onClick="onClick"
-        android:text="@string/take"
+        android:text="GRAB"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/accept"
-        app:layout_constraintHorizontal_bias="0.472"
+        app:layout_constraintHorizontal_bias="0.611"
         app:layout_constraintRight_toRightOf="parent"
         app:layout_constraintStart_toEndOf="@+id/ButtonUploadImage"
-        app:layout_constraintTop_toBottomOf="@+id/result" />
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintVertical_bias="1.0" />
 
     <Button
         android:id="@+id/accept"
-        android:layout_width="94dp"
+        android:layout_width="111dp"
         android:layout_height="43dp"
-        android:layout_marginBottom="8dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
+        android:layout_marginTop="8dp"
         android:fontFamily="casual"
         android:lineSpacingExtra="8sp"
-        android:text="@string/accept"
+        android:text="Preview"
         android:textAlignment="center"
         android:textSize="18sp"
         android:textStyle="bold|italic"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/result"
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
         app:layout_constraintVertical_bias="1.0" />
 
     <EditText
@@ -83,7 +80,7 @@
         android:id="@+id/editText2"
         android:layout_width="0dp"
         android:layout_height="45dp"
-        android:layout_marginBottom="128dp"
+        android:layout_marginBottom="64dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="@string/bottom"
@@ -99,6 +96,8 @@
         android:layout_width="0dp"
         android:layout_height="53dp"
         android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
         android:fontFamily="serif"
         android:text="@string/app_name"
         android:textAlignment="center"
@@ -107,15 +106,17 @@
         android:textSize="16sp"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/result"
-        app:layout_constraintHorizontal_bias="1.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        app:layout_constraintEnd_toEndOf="@+id/result"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/result" />
 
     <TextView
         android:id="@+id/top"
-        android:layout_width="0dp"
+        android:layout_width="363dp"
         android:layout_height="53dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="16dp"
         android:fontFamily="serif"
         android:text="@string/textview"
         android:textAlignment="center"
@@ -124,8 +125,8 @@
         android:textColor="@color/common_google_signin_btn_text_dark_default"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/result"
+        app:layout_constraintStart_toStartOf="@+id/result"
         app:layout_constraintTop_toTopOf="@+id/result" />
 
     <Button
@@ -133,30 +134,12 @@
         android:layout_width="98dp"
         android:layout_height="wrap_content"
         android:layout_below="@+id/ImageNameEditText"
-        android:layout_marginLeft="4dp"
         android:layout_marginTop="8dp"
         android:text="Upload"
         android:textSize="18sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom"
-        app:layout_constraintVertical_bias="0.994" />
-
-    <EditText
-        android:id="@+id/imageNameEditText"
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ButtonChooseImage"
-        android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="132dp"
-        android:gravity="center"
-        android:hint="Enter Image Name Here"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/bottom" />
+        app:layout_constraintTop_toBottomOf="@+id/editText2"
+        app:layout_constraintVertical_bias="1.0" />
 
 </android.support.constraint.ConstraintLayout>

@@ -11,4 +11,5 @@
     <string name="take">TAKE</string>
     <string name="enter_image_name_here">Enter Image Name Here</string>
     <string name="upload">Upload</string>
+    <string name="json_image_name">JSon Image Name</string>
 </resources>

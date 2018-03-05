@@ -27,7 +27,7 @@ public class Library extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_library);
         imageView = findViewById(R.id.image);
-        databaseReference = FirebaseDatabase.getInstance().getReference(upload_photos.Database_Path);
+        databaseReference = FirebaseDatabase.getInstance().getReference(pickingImage.Database_Path);
 
         String url = "http://wallpaper-gallery.net/images/cool-pictures/cool-pictures-2.jpg";
         Glide.with(getApplicationContext()).load(url).into(imageView);

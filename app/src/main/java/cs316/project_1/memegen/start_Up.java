@@ -26,7 +26,7 @@ public class start_Up extends AppCompatActivity {
             }
         });
 
-        final Intent moveToUploadPage2 = new Intent(this, Library.class);
+        final Intent moveToUploadPage2 = new Intent(this, DIA.class);
         Uploadpage2 = (ImageButton) findViewById(R.id.uploadPicture2);
         Uploadpage2.setOnClickListener(new View.OnClickListener() {
             @Override
