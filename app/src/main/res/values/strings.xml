@@ -10,6 +10,11 @@
     <string name="todo">TODO</string>
     <string name="take">TAKE</string>
     <string name="enter_image_name_here">Enter Image Name Here</string>
-    <string name="upload">Upload</string>
     <string name="json_image_name">JSon Image Name</string>
+    <string name="upload">Upload</string>
+    <string name="grab">GRAB</string>
+    <string name="preview">Preview</string>
+    <string name="camera">Camera</string>
+    <string name="edit">Edit</string>
+    <string name="facebook_app_id">fb1996507847343141</string>
 </resources>
